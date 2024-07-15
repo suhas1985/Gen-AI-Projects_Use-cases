@@ -1,5 +1,5 @@
 # Set up OpenAI API key
-openai.api_key = 'your-openai-api-key'
+openai.api_key = 'Open AI API Key'
 
 # Function to convert natural language to SQL query using OpenAI API
 def nlp_to_sql(natural_language_query):
