@@ -1,0 +1,39 @@
+# Set up OpenAI API key
+openai.api_key = 'your-openai-api-key'
+
+# Function to convert natural language to SQL query using OpenAI API
+def nlp_to_sql(natural_language_query):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=f"Convert the following natural language query to an SQL query: {natural_language_query}",
+        max_tokens=100
+    )
+    sql_query = response.choices[0].text.strip()
+    return sql_query
+
+# Function to execute SQL query and fetch results
+def execute_sql_query(sql_query):
+    conn = sqlite3.connect('example.db')
+    cursor = conn.cursor()
+    cursor.execute(sql_query)
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+# Streamlit app
+st.title("NLP to SQL Converter")
+
+query = st.text_input("Enter your natural language query:")
+if st.button("Convert and Execute"):
+    if query:
+        sql_query = nlp_to_sql(query)
+        st.write(f"Generated SQL Query: {sql_query}")
+        
+        try:
+            result = execute_sql_query(sql_query)
+            st.write("Query Results:")
+            st.write(result)
+        except Exception as e:
+            st.error(f"Error executing SQL query: {e}")
+    else:
+        st.error("Please enter a query")
