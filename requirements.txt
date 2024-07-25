@@ -1,3 +1,8 @@
-streamlit 
-openai 
-sqlite3
+streamlit
+PyPDF2
+python-docx
+pptx
+Pillow
+google-cloud-gemini
+langchain
+faiss
